@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Caçador de Relíquias: O Relógio de Arquimedes — Ação e Aventura 3D</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div id="splash-dev"><div id="splash-dev-text">JOGO DESENVOLVIDO POR<br><span>FABIO EDUARDO 2DS</span></div></div>
+<div id="game-container"></div>
+
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div id="hud-top-left">
+    <div id="health-wrap"><div class="health-label">❤ VIDA <span id="health-num">200/200</span></div><div id="health-bar"><div id="health-fill"></div></div></div>
+    <div id="stamina-wrap"><div class="health-label">⚡ FÔLEGO</div><div id="stamina-bar"><div id="stamina-fill"></div></div></div>
+  </div>
+  <div id="hud-top-center">
+    <div id="level-name">FASE 1 — AMAZÔNIA, BRASIL</div>
+    <div id="objective">Encontre a entrada da caverna</div>
+  </div>
+  <div id="hud-top-right">
+    <div id="relic-counter">⚙️ <span id="relic-count">0</span>/<span id="relic-total">0</span></div>
+    <div id="timer">⏱ <span id="time-value">00:00</span></div>
+    <div id="score">⭐ <span id="score-value">0</span></div>
+    <div id="kills">💀 <span id="kill-count">0</span> • 💖 <span id="second-count">0</span></div>
+  </div>
+  <div id="crosshair">+</div>
+  <!-- 🎯 MIRA TRAVADA (Z) -->
+  <div id="aim-tag" class="hidden"><span id="aim-tag-name"></span><span id="aim-tag-hint">Z solta</span></div>
+  <div id="message"></div>
+  <!-- TUTORIAL DA FASE 1 (painel de objetivo simples, com marcador no chão) -->
+  <div id="tutorial" class="hidden">
+    <div id="tut-kicker">📖 TUTORIAL</div>
+    <div id="tut-title"></div>
+    <p id="tut-text"></p>
+    <div id="tut-foot">
+      <div id="tut-dots"></div>
+      <button id="btn-tut-skip" type="button">Pular ✕</button>
+    </div>
+  </div>
+  <div id="missions">
+    <div class="msn-title">📜 MISSÕES</div>
+    <div class="msn-main">⭐ Passe por toda a caverna</div>
+    <div id="missions-side"></div>
+  </div>
+  <div id="mission" class="hidden">
+    <div id="mis-kicker">🎯 MISSÃO</div>
+    <div id="mis-title"></div>
+    <p id="mis-hint"></p>
+  </div>
+  <div id="phase-preview" class="hidden">
+    <div id="pp-kicker">🔮 VISÃO DO DESTINO</div>
+    <div id="pp-title"></div>
+    <div id="pp-text"></div>
+  </div>
+  <div id="damage-vignette"></div>
+  <div id="boss-bar-wrap" class="hidden"><div id="boss-name">SENTINELA DO TEMPO</div><div id="boss-bar"><div id="boss-fill"></div></div></div>
+  <div id="status-effects"></div>
+  <div id="skills-row">
+    <div id="lasso-hud"><div id="lasso-icon">🪢</div><div><span id="lasso-key">G</span></div><div id="lasso-bar"><div id="lasso-fill"></div></div></div>
+    <div id="spin-hud"><div id="spin-icon">🌀</div><div><span id="spin-key">H</span></div><div id="spin-bar"><div id="spin-fill"></div></div></div>
+    <div id="aim-hud"><div id="aim-icon">🎯</div><div><span id="aim-key">Z</span></div></div>
+  </div>
+</div>
+
+<!-- Touch controls -->
+<div id="touch-controls" class="hidden">
+  <div id="joystick"><div id="stick"></div></div>
+  <div id="touch-buttons">
+    <button id="btn-jump">⤒</button>
+    <button id="btn-whip">🐍</button>
+    <button id="btn-spin" class="spin">🌀</button>
+    <button id="btn-aim" class="aim">🎯</button>
+    <button id="btn-swing">🌀</button>
+    <button id="btn-lasso">🪢</button>
+    <button id="btn-dodge">↯</button>
+    <button id="btn-run">🏃</button>
+    <button id="btn-act">E</button>
+  </div>
+</div>
+
+<!-- Menu inicial -->
+<div id="menu" class="screen">
+  <div class="panel">
+    <div class="kicker">AÇÃO • AVENTURA • 3D • WEB</div>
+    <h1>🏺 CAÇADOR<br>DE RELÍQUIAS</h1>
+    <h2>O Relógio de Arquimedes</h2>
+    <p class="lore">1969. Na briga com Jürgen Voller pelo Relógio de Arquimedes — a lenda diz que quem o portar viaja para qualquer lugar no tempo — o vilão fica com o mostrador e joga você para longe de casa: uma caverna no meio da Amazônia, Brasil. Atravesse a caverna, junte os fragmentos e tome o <b>Cálice da Âncora</b>, o artefato que teletransporta para onde você quiser. É a sua volta para casa... e a última chance de deter Voller.</p>
+    <p class="lore"><b>📖 Tutorial na fase 1:</b> um guia de 6 passos aparece no começo (andar → atacar → pegar o drop → 3 fragmentos → argola 🌀 → abrir a porta). Cada passo mostra um <b>marcador dourado no chão</b> com o alvo. Dá pra pular quando quiser.</p>
+    <div class="controls-grid">
+      <div><b>WASD</b> mover</div><div><b>Mouse</b> câmera</div>
+      <div><b>Espaço</b> pular</div><div><b>Clique / F</b> chicote (só ataca)</div>
+      <div><b>V / 🌀</b> argolas (só V voa!)</div><div><b>E</b> interagir</div>
+      <div><b>Shift</b> correr</div><div><b>Q / R</b> girar câmera</div>
+      <div><b>C / ↯</b> esquiva (ou 2 toques na direção)</div><div><b>P</b> pausar</div>
+      <div><b>G</b> laço 🪢 (30s)</div>      <div><b>H / 🌀</b> giro do chicote (área, empurra, gasta fôlego)</div>
+      <div><b>Z / 🎯</b> travar a mira num inimigo</div><div></div>
+    </div>
+    <div id="difficulty">
+      <div class="diff-title">⚙ DIFICULDADE</div>
+      <div id="diff-btns">
+        <button class="diff-btn" data-diff="facil" type="button">
+          <b>🟢 FÁCIL</b>
+          <span>Para iniciantes que querem apreciar a aventura e ver a história de Indiana Jones.</span>
+        </button>
+        <button class="diff-btn" data-diff="medio" type="button">
+          <b>🟡 MÉDIO</b>
+          <span>Jogo mediano para quem quer um pouco de dificuldade, mas com certo nível de facilidade.</span>
+        </button>
+        <button class="diff-btn" data-diff="dificil" type="button">
+          <b>🔴 DIFÍCIL</b>
+          <span>Para quem já está familiarizado com o jogo e quer um nível alto de dificuldade.</span>
+        </button>
+      </div>
+      <div id="diff-desc">Escolha 🟢 🟡 ou 🔴 — o jogo muda de verdade: quantidade de inimigos, armadilhas, vida, dano e a Sentinela.</div>
+      <div id="diff-status">⚠ Escolha uma dificuldade para começar</div>
+    </div>
+    <button id="btn-start" class="big">▶ ESCOLHA UMA DIFICULDADE</button>
+    <button id="btn-continue" class="ghost hidden">↻ CONTINUAR</button>
+    <button id="btn-help" class="ghost">❓ COMO JOGAR</button>
+    <div id="help-text" class="hidden">Nova York, 1969: Voller fugiu com o Relógio de Arquimedes e jogou você numa caverna na Amazônia, Brasil. Atravesse as 3 fases, junte fragmentos ⚙️, puxe alavancas e desvie de troncos e pedras rolantes 🪵, lanças 🗡, espinhos e lava. As argolas douradas funcionam <b>SÓ no V</b> 🌀 (clique/F é SÓ ataque, NÃO voa!) com <b>6s de recarga</b> — MIRE com a cruz pra escolher onde cair! — ou suba as pedras de ponta branca 🧗. No celular use o botão 🌀. No fim da Fase 2 tem uma <b>ponte de lajes frágeis</b>: ao pisar elas tremem e <b>caem 3 segundos depois</b> — corra sem parar. A cobra ENVENENA ☠️ por <b>6s</b> e a lava deixa <b>QUEIMANDO 🔥 por 5s</b> (4 de dano por segundo). Bater numa armadilha <b>não te joga pro começo da fase</b>: você se levanta no último chão seguro e continua. Correr gasta fôlego; kits médicos curam e podem ter pílula vital (+20 vida máx, teto 340).
+
+    <br><br>📖 <b>ALTAR + LIVRO ANCESTRAL (quiz)</b>: juntou todos os fragmentos ⚙️? O livro no altar destranca e acende. Chegue perto e aperte <b>E</b>: o livro faz <b>perguntas de prova</b> (Matemática, Português, Ciências e História). <b>Acertando, a porta de pedra se abre</b>; errando, o livro morde (‑8 de vida) e pergunta de novo. Na Fase 2 o livro só destranca depois das <b>2 alavancas</b>. Na Fase 3 <b>não há quiz</b>: o altar do selo, no túnel, se rompe com um único <b>E</b>.<br><br>⚙ <b>DIFICULDADE (obrigatória)</b>: o jogo não começa sem você escolher uma.
+🟢 <b>FÁCIL</b> — 2 inimigos de cada tipo por fase, <b>armadilhas reduzidas</b>, 300 de vida, dano pela metade. Para iniciantes que querem apreciar a aventura e ver a história de Indiana Jones.<br>
+🟡 <b>MÉDIO</b> — 3 inimigos de cada tipo, armadilhas completas, 200 de vida. Jogo mediano para quem quer um pouco de dificuldade, mas com certo nível de facilidade.<br>
+🔴 <b>DIFÍCIL</b> — 5 inimigos de cada tipo, 150 de vida, dano +60%, inimigos rápidos, Sentinela com 1170. Para quem já está familiarizado com o jogo e quer um nível alto de dificuldade.
+
+    <br><br>🪢 <b>LAÇO (G, 30s)</b>: laça o alvo mais próximo a 14m — <b>inimigo OU item no chão</b> (o drop voa girando até a sua mão!). Num inimigo: <b>arranca ele do chão, gira no ar e esmaga no chão</b>. Inimigo comum morre na hora. Contra a <b>Sentinela do Tempo</b> o laço não quebra a pedra: ela <b>cai ATORDOADA ⚡</b> — e atordoada leva <b>dano dobrado</b>. Use aproximando no momento certo.
+
+    <br><br>🗿 <b>SENTINELA DO TEMPO (900 de vida, 5,2m)</b>: Sentinela colossal com mãos de pedra e o mostrador do Relógio no peito. A arena é <b>LIMPA</b> — nenhuma armadilha, é você contra ela. Ataques: <b>🗿 PANCADA</b>, <b>🌊 ONDA DE CHOQUE</b> e <b>🌀 GIRO</b>.
+
+    <br><br>🌀 <b>COMO DESVIAR (4 jeitos)</b>:<br>1) 🔴 <b>Veja a marca vermelha no chão</b> — ela mostra exatamente onde o golpe vai cair e pulsa mais rápido conforme chega.<br>2) <b>C / Ctrl / ↯</b> (ou <b>dois toques</b> na direção) = <b>esquiva</b>: rolamento de 360° com invulnerabilidade durante o giro.<br>3) ⏱️ <b>Esquiva perfeita</b>: se o golpe passaria em você e NÃO pegou, o tempo fica <b>lento</b> e a Sentinela desequilibra (ataque!).<br>4) ⚡ <b>Parry</b>: bata com o chicote <b>enquanto ela ergue as mãos</b> (antecipação) — o golpe é cancelado e o dano dobra.<br>Também dá pra <b>pular por cima</b> da onda e <b>empurrar a Sentinela contra a PAREDE</b> — quando ela martela a pedra fica <b>ATORDOADA 2,6s</b> com dano dobrado. Aos 40% de vida ela ENFURECE.
+
+    <br><br>🏆 <b>CÁLICE DA ÂNCORA</b>: derrotada a Sentinela, o pedestal do fundo da arena entrega um <b>cálice dourado</b> — o prêmio final. É ele que abre o túnel de fuga.
+
+    <br><br>🏃 <b>FUGA</b>: pegue o cálice e CORRA pela arena, atravesse o vão de lava (lajes caem! use as passarelas laterais se estiver com pressa) e entre no túnel verde. A pedrona que te persegue também não atravessa parede.</div>
+    <div class="foot">Three.js • sem instalação • progresso salvo no navegador</div>
+  </div>
+</div>
+
+<!-- Cutscene de cinema -->
+<div id="cutscene" class="hidden">
+  <div id="cs-bar-top"></div>
+  <div id="cs-bottom">
+    <div id="cs-kicker"></div>
+    <h2 id="cs-title"></h2>
+    <p id="cs-text"></p>
+    <div id="cs-hint">clique ou aperte <b>Espaço</b> p/ continuar • <b>Esc</b> p/ pular</div>
+  </div>
+  <div id="cs-bar"></div>
+</div>
+
+<!-- Transição de fase -->
+<div id="story" class="screen hidden">
+  <div class="panel">
+    <div id="story-kicker" class="kicker">FASE 1 — 1969</div>
+    <h1 id="story-title">Despertar na Amazônia</h1>
+    <p id="story-text" class="lore"></p>
+    <button id="btn-next" class="big">▶ ENTRAR</button>
+  </div>
+</div>
+
+<!-- 📖 QUIZ DO LIVRO ANCESTRAL: altar + livro abre a porta -->
+<div id="quiz" class="screen hidden">
+  <div class="panel quiz-panel">
+    <div class="kicker" id="quiz-kicker">📖 LIVRO ANCESTRAL</div>
+    <h1 id="quiz-title">O LIVRO PERGUNTA…</h1>
+    <div class="quiz-meta" id="quiz-meta"></div>
+    <p class="lore" id="quiz-question">Carregando pergunta…</p>
+    <div id="quiz-opts"></div>
+    <div id="quiz-feedback"></div>
+    <p class="lore quiz-dica" id="quiz-dica"></p>
+    <p class="lore quiz-foot" id="quiz-foot">Matemática • Português • Ciências • História — até o 5º ano</p>
+  </div>
+</div>
+
+<!-- Pause / GameOver / Vitória -->
+<div id="pause" class="screen hidden">
+  <div class="panel"><h1>⏸ PAUSADO</h1><p class="lore">Respire, aventureiro.</p>
+    <button id="btn-resume" class="big">▶ CONTINUAR</button>
+    <button id="btn-restart" class="ghost">↻ REINICIAR FASE</button>
+    <button id="btn-quit" class="ghost">🏠 MENU</button>
+  </div>
+</div>
+
+<div id="gameover" class="screen hidden">
+  <div class="panel"><h1>💀 VOCÊ CAIU</h1><p class="lore" id="death-text">O tempo cobra seu preço...</p>
+    <button id="btn-retry" class="big">↻ TENTAR DE NOVO</button>
+    <button id="btn-go-menu" class="ghost">🏠 MENU</button>
+  </div>
+</div>
+
+<div id="victory" class="screen hidden">
+  <div class="panel gold"><div class="kicker">🏆 LENDÁRIO!</div>
+    <h1>O CÁLICE É SEU!</h1>
+    <p class="lore" id="victory-stats"></p>
+    <button id="btn-again" class="big">↻ JOGAR DE NOVO</button>
+  </div>
+</div>
+
+<div id="loading" class="screen hidden"><div class="panel"><h1>⌛ Carregando selva...</h1></div></div>
+
+<script type="importmap">
+{ "imports": { "three": "./js/three.module.js" } }
+</script>
+<script type="module" src="js/game.js"></script>
+</body>
+</html>

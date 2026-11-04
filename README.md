@@ -1,4 +1,4 @@
-# ⌛ Caçador de Relíquias: O Relógio de Arquimedes
+# ⌛indiana jones a taça perdida
 
 Jogo de **ação e aventura 3D** estilo Indiana Jones, rodando no navegador com **Three.js**. Sem instalação, sem build.
 

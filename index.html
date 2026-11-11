@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+<title>Indiana Jones e a Taça Perdida — Ação e Aventura 3D</title>
+<link rel="stylesheet" href="css/style.css" />
+<!-- 🎬 MENU v2: o style.css está somente-leitura/cortado no bloco do menu,
+     então o visual novo do menu entra inline aqui (carrega DEPOIS = vence) -->
+<style>
+#menu{background:
+  radial-gradient(ellipse at 50% 18%,rgba(90,58,12,.5),rgba(4,3,1,.92) 72%),
+  linear-gradient(160deg,#0d0a05,#050403)}
+#menu-panel{position:relative;max-width:900px;width:min(96vw,900px);max-height:calc(100dvh - 28px);
+  display:flex;flex-direction:column;overflow:hidden;text-align:left;padding:0;border-radius:18px;
+  background:linear-gradient(180deg,rgba(34,24,10,.96),rgba(13,10,4,.97));
+  box-shadow:0 30px 90px rgba(0,0,0,.85),0 0 0 2px rgba(201,162,39,.6),0 0 60px rgba(255,190,80,.14);
+  animation:mIn .55s cubic-bezier(.16,1.2,.4,1) both}
+@keyframes mIn{from{opacity:0;transform:translateY(28px) scale(.97)}to{opacity:1;transform:none}}
+#menu-panel::before{content:'';position:absolute;inset:0;border-radius:18px;padding:2px;z-index:4;pointer-events:none;
+  background:linear-gradient(120deg,#c9a227,#5f440e 28%,#ffd76a 50%,#5f440e 72%,#c9a227);
+  background-size:300% 300%;animation:mGlow 7s linear infinite;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude}
+@keyframes mGlow{to{background-position:300% 50%}}
+#menu-panel::after{content:'';position:absolute;inset:0;border-radius:17px;pointer-events:none;z-index:1;
+  background:radial-gradient(ellipse at 50% 26%,transparent 52%,rgba(0,0,0,.52))}
+.m-head{position:relative;z-index:2;flex:none;padding:24px 34px 4px;text-align:center}
+.m-emblem{position:relative;z-index:2;font-size:54px;line-height:1;margin:2px 0 4px;
+  filter:drop-shadow(0 6px 12px rgba(0,0,0,.85)) drop-shadow(0 0 26px rgba(255,210,106,.5));
+  animation:mFloat 3.8s ease-in-out infinite}
+@keyframes mFloat{50%{transform:translateY(-9px) rotate(-4deg)}}
+.m-kicker{position:relative;z-index:2;letter-spacing:5px;font-size:12px;color:#ffd76a;font-weight:900;
+  text-shadow:0 0 16px rgba(255,215,106,.4);margin-bottom:8px}
+.m-title{position:relative;z-index:2;font-size:clamp(46px,7.4vw,76px);line-height:.96;letter-spacing:3px;font-weight:900;margin:0;
+  background:linear-gradient(100deg,#ffb44a,#fff3c4 26%,#ffd76a 50%,#fff3c4 74%,#c9a227);
+  background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 4px 0 rgba(0,0,0,.9)) drop-shadow(0 0 30px rgba(255,190,70,.4));
+  animation:mShine 5.4s linear infinite}
+.m-title span{display:block}
+@keyframes mShine{to{background-position:-220% 0}}
+.m-sub{position:relative;z-index:2;color:#ffe6a3;font-style:italic;font-weight:800;letter-spacing:5px;
+  font-size:clamp(15px,2.3vw,21px);text-shadow:0 2px 10px rgba(0,0,0,.9);margin:6px 0 0}
+.m-badges{position:relative;z-index:2;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:14px 0 2px}
+.badge{font-size:12px;font-weight:800;letter-spacing:1.4px;color:#ffe9b0;white-space:nowrap;
+  background:linear-gradient(180deg,rgba(122,88,26,.55),rgba(60,42,13,.62));
+  border:1px solid rgba(255,215,106,.55);border-radius:999px;padding:7px 15px;
+  box-shadow:0 3px 10px rgba(0,0,0,.55),inset 0 0 14px rgba(255,215,106,.12)}
+.m-scroller{position:relative;z-index:2;overflow-y:auto;flex:1;padding:8px 34px 26px;
+  scrollbar-width:thin;scrollbar-color:#8a6a2a transparent;scrollbar-gutter:stable}
+.m-scroller::-webkit-scrollbar{width:9px}
+.m-scroller::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#c9a227,#6b4e12);border-radius:8px}
+.m-scroller::-webkit-scrollbar-thumb:hover{background:#ffd76a}
+.m-rule{position:relative;z-index:2;border:none;height:2px;margin:18px 4px 16px;border-radius:2px;overflow:visible;
+  background:linear-gradient(90deg,transparent,rgba(201,162,39,.8) 22%,rgba(255,215,106,.95) 50%,rgba(201,162,39,.8) 78%,transparent)}
+.m-rule::after{content:'✦';position:absolute;left:50%;top:50%;transform:translate(-50%,-54%);
+  color:#ffd76a;background:#171006;padding:0 9px;font-size:11px;text-shadow:0 0 10px rgba(255,215,106,.8)}
+.m-block-title{font-size:13px;letter-spacing:4px;color:#ffd76a;font-weight:900;margin:4px 0 12px;
+  text-shadow:0 0 16px rgba(255,215,106,.35)}
+#menu .lore{font-size:14.5px;line-height:1.7;margin:10px 0 14px;padding:12px 16px;text-align:left;
+  background:rgba(255,255,255,.035);border:1px solid rgba(201,162,39,.22);border-radius:12px;
+  box-shadow:inset 0 1px 0 rgba(255,215,106,.06)}
+#menu .lore b{color:#ffd76a}
+#menu .controls-grid{grid-template-columns:repeat(2,1fr);gap:10px 12px;margin:4px 0 4px;opacity:1}
+#menu .controls-grid div{display:flex;align-items:center;gap:10px;font-size:13.5px;text-align:left;
+  background:rgba(255,255,255,.045);border:1px solid rgba(201,162,39,.3);border-radius:12px;padding:10px 13px;
+  transition:border-color .15s,background .15s,transform .15s}
+#menu .controls-grid div:hover{border-color:rgba(255,215,106,.65);background:rgba(255,215,106,.09);transform:translateY(-1px)}
+#menu .controls-grid b{flex:none;min-width:52px;text-align:center;background:linear-gradient(180deg,#ffd76a,#c9a227);
+  color:#221600;font-weight:900;border-radius:7px;padding:4px 8px;font-size:12px;box-shadow:0 2px 0 rgba(0,0,0,.5)}
+#menu .controls-grid span{opacity:.94}
+#menu #difficulty{margin:8px 0 6px;padding:0;border:none;background:none}
+#menu .diff-title{font-size:13px;margin-bottom:12px}
+#menu #diff-btns{gap:12px}
+#menu .diff-btn{position:relative;padding:14px 16px;border-radius:14px;border-width:2px;background:rgba(255,255,255,.055);
+  transition:border-color .18s,background .18s,transform .18s,box-shadow .18s}
+#menu .diff-btn b{font-size:16px;margin-bottom:6px}
+#menu .diff-btn span{font-size:12px;line-height:1.5}
+#menu .diff-btn:hover{transform:translateY(-3px);background:rgba(255,255,255,.11)}
+#menu .diff-btn.sel{background:rgba(201,162,39,.2);box-shadow:0 0 0 2px rgba(255,215,106,.35),0 0 26px rgba(255,215,106,.3),inset 0 0 24px rgba(255,215,106,.14)}
+#menu #diff-desc{margin-top:12px;font-size:13px;line-height:1.55;background:rgba(255,255,255,.04);border:1px solid rgba(201,162,39,.3);border-radius:12px;padding:10px 14px}
+#menu #diff-status{margin-top:9px;font-size:13.5px}
+#menu #btn-start{position:relative;overflow:hidden;width:100%;height:56px;margin:12px 0 4px;border-radius:15px;
+  background:linear-gradient(180deg,#ffe27a,#e7b93c 55%,#c9a227);color:#231800;font-size:19px;font-weight:900;
+  letter-spacing:1.2px;text-transform:uppercase;
+  box-shadow:0 6px 0 #6e5510,0 12px 30px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.65);transition:transform .14s,box-shadow .14s,filter .14s}
+#menu #btn-start::after{content:'';position:absolute;top:-30%;bottom:-30%;left:-45%;width:32%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-18deg);
+  animation:mBtnShine 3.6s ease-in-out infinite}
+@keyframes mBtnShine{0%,52%{left:-45%}92%,100%{left:125%}}
+#menu #btn-start:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 8px 0 #6e5510,0 16px 34px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.65)}
+#menu #btn-start:active{transform:translateY(3px);box-shadow:0 2px 0 #6e5510,0 6px 16px rgba(0,0,0,.6)}
+#menu button.ghost{width:100%;height:48px;margin:8px 0 0;border-radius:12px;font-size:14.5px;font-weight:800;
+  background:rgba(255,255,255,.06);border:1px solid rgba(201,162,39,.45);color:#f5ead2;transition:.18s}
+#menu button.ghost:hover{background:rgba(201,162,39,.22);border-color:#ffd76a;transform:translateY(-1px)}
+#menu #help-text{max-height:min(44vh,420px);overflow:auto;text-align:left;margin-top:12px;
+  background:rgba(8,6,2,.75);border:1px dashed rgba(201,162,39,.5);border-radius:14px;
+  padding:14px 18px;font-size:13.5px;line-height:1.65;color:#efdfc2;
+  scrollbar-width:thin;scrollbar-color:#8a6a2a transparent}
+#menu #help-text p{margin:0 0 12px}
+#menu #help-text b{color:#ffd76a}
+#menu .foot{position:relative;z-index:2;margin:16px 0 0;font-size:11.5px;color:#c9b48a;text-align:center;opacity:.9}
+#menu .foot .m-credit{display:block;margin-top:7px;color:#ffd76a;font-weight:800;letter-spacing:.6px;
+  text-shadow:0 0 12px rgba(255,215,106,.3)}
+#menu .foot .m-credit b{color:#fff}
+.m-corners i{position:absolute;width:24px;height:24px;z-index:5;pointer-events:none;
+  border:3px solid #ffd76a;box-shadow:0 0 10px rgba(255,215,106,.55);animation:mCorner 2.6s ease-in-out infinite}
+.m-corners .c1{top:10px;left:10px;border-right:none;border-bottom:none;border-radius:10px 0 0 0}
+.m-corners .c2{top:10px;right:10px;border-left:none;border-bottom:none;border-radius:0 10px 0 0;animation-delay:.4s}
+.m-corners .c3{bottom:10px;left:10px;border-right:none;border-top:none;border-radius:0 0 0 10px;animation-delay:.8s}
+.m-corners .c4{bottom:10px;right:10px;border-left:none;border-top:none;border-radius:0 0 10px 0;animation-delay:1.2s}
+@keyframes mCorner{50%{opacity:.45;transform:scale(.92)}}
+.m-dust i{position:absolute;bottom:-8px;width:5px;height:5px;border-radius:50%;z-index:1;pointer-events:none;
+  background:rgba(255,213,106,.75);box-shadow:0 0 9px rgba(255,213,106,.85);opacity:0;
+  animation:mDust linear infinite}
+.m-dust i:nth-child(1){left:7%;animation-duration:8s}
+.m-dust i:nth-child(2){left:19%;animation-duration:11s;animation-delay:1.2s}
+.m-dust i:nth-child(3){left:31%;animation-duration:9s;animation-delay:2.6s}
+.m-dust i:nth-child(4){left:43%;animation-duration:12s;animation-delay:.4s}
+.m-dust i:nth-child(5){left:55%;animation-duration:8.5s;animation-delay:3.1s}
+.m-dust i:nth-child(6){left:66%;animation-duration:10s;animation-delay:1.8s}
+.m-dust i:nth-child(7){left:76%;animation-duration:9.5s;animation-delay:4.4s}
+.m-dust i:nth-child(8){left:86%;animation-duration:11.5s;animation-delay:2.2s}
+.m-dust i:nth-child(9){left:94%;animation-duration:8.8s;animation-delay:5.2s}
+.m-dust i:nth-child(10){left:48%;animation-duration:13s;animation-delay:6s;transform:scale(.7)}
+@keyframes mDust{0%{transform:translateY(0);opacity:0}14%{opacity:.9}82%{opacity:.5}100%{transform:translateY(-640px);opacity:0}}
+.m-control-pop{animation:mPop .3s ease both}
+@keyframes mPop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+@media(max-width:700px){
+  #menu .m-head{padding:16px 18px 2px}
+  #menu .m-scroller{padding:6px 18px 18px}
+  #menu .badge{font-size:10.5px;padding:5px 11px}
+  #menu .m-title{letter-spacing:1.5px}
+  #menu .controls-grid{grid-template-columns:1fr 1fr;gap:7px}
+  #menu .controls-grid b{min-width:40px;font-size:10.5px;padding:3px 6px}
+  #menu .controls-grid div{font-size:11.5px;padding:7px 9px;gap:7px}
+  #menu .diff-btn{padding:10px}
+  #menu .diff-btn b{font-size:13.5px}
+}
+</style>
+</head>
+<body>
+<div id="splash-dev"><div id="splash-dev-text">JOGO DESENVOLVIDO POR<br><span>FABIO EDUARDO 2DS</span></div></div>
+<div id="game-container"></div>
+<!-- HUD -->
+<div id="hud" class="hidden">
+  <div id="hud-top-left">
+    <div id="health-wrap"><div class="health-label">❤ VIDA <span id="health-num">200/200</span></div><div id="health-bar"><div id="health-fill"></div></div></div>
+    <div id="stamina-wrap"><div class="health-label">⚡ FÔLEGO</div><div id="stamina-bar"><div id="stamina-fill"></div></div></div>
+  </div>
+  <div id="hud-top-center">
+    <div id="level-name">FASE 1 — AMAZÔNIA, BRASIL</div>
+    <div id="objective">Encontre a entrada da caverna</div>
+  </div>
+  <div id="hud-top-right">
+    <div id="relic-counter">⚙️ <span id="relic-count">0</span>/<span id="relic-total">0</span></div>
+    <div id="timer">⏱ <span id="time-value">00:00</span></div>
+    <div id="score">⭐ <span id="score-value">0</span></div>
+    <div id="kills">💀 <span id="kill-count">0</span> • 💖 <span id="second-count">0</span></div>
+  </div>
+  <div id="crosshair">+</div>
+  <!-- 🎯 MIRA TRAVADA (Z) -->
+  <div id="aim-tag" class="hidden"><span id="aim-tag-name"></span><span id="aim-tag-hint">Z solta</span></div>
+  <div id="message"></div>
+  <!-- TUTORIAL DA FASE 1 (painel de objetivo simples, com marcador no chão) -->
+  <div id="tutorial" class="hidden">
+    <div id="tut-kicker">📖 TUTORIAL</div>
+    <div id="tut-title"></div>
+    <p id="tut-text"></p>
+    <div id="tut-foot">
+      <div id="tut-dots"></div>
+      <button id="btn-tut-skip" type="button">Pular ✕</button>
+    </div>
+  </div>
+  <div id="missions">
+    <div class="msn-title">📜 MISSÕES</div>
+    <div class="msn-main">⭐ Passe por toda a caverna</div>
+    <div id="missions-side"></div>
+  </div>
+  <div id="mission" class="hidden">
+    <div id="mis-kicker">🎯 MISSÃO</div>
+    <div id="mis-title"></div>
+    <p id="mis-hint"></p>
+  </div>
+  <div id="phase-preview" class="hidden">
+    <div id="pp-kicker">🔮 VISÃO DO DESTINO</div>
+    <div id="pp-title"></div>
+    <div id="pp-text"></div>
+  </div>
+  <div id="damage-vignette"></div>
+  <div id="boss-bar-wrap" class="hidden"><div id="boss-name">MÚMIA GIGANTE</div><div id="boss-bar"><div id="boss-fill"></div></div></div>
+  <div id="status-effects"></div>
+  <div id="skills-row">
+    <div id="ring-hud"><div id="ring-icon">⭕</div><div><span id="ring-key">V</span></div><div id="ring-bar"><div id="ring-fill"></div></div></div>
+    <div id="lasso-hud"><div id="lasso-icon">🪢</div><div><span id="lasso-key">G</span></div><div id="lasso-bar"><div id="lasso-fill"></div></div></div>
+    <div id="spin-hud"><div id="spin-icon">🌀</div><div><span id="spin-key">H</span></div><div id="spin-bar"><div id="spin-fill"></div></div></div>
+    <div id="aim-hud"><div id="aim-icon">🎯</div><div><span id="aim-key">Z</span></div></div>
+  </div>
+</div>
+
+<!-- Touch controls -->
+<div id="touch-controls" class="hidden">
+  <div id="joystick"><div id="stick"></div></div>
+  <div id="touch-buttons">
+    <button id="btn-jump">⤒</button>
+    <button id="btn-whip">🐍</button>
+    <button id="btn-spin" class="spin">🌀</button>
+    <button id="btn-aim" class="aim">🎯</button>
+    <button id="btn-swing">🌀</button>
+    <button id="btn-lasso">🪢</button>
+    <button id="btn-dodge">↯</button>
+    <button id="btn-run">🏃</button>
+    <button id="btn-act">E</button>
+  </div>
+</div>
+
+<!-- Menu inicial -->
+<div id="menu" class="screen">
+  <div class="panel rich" id="menu-panel">
+    <div class="m-corners" aria-hidden="true"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
+    <div class="m-dust" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="m-head">
+      <div class="m-emblem" aria-hidden="true">🎩</div>
+      <div class="kicker m-kicker">AÇÃO • AVENTURA • 3D • WEB</div>
+      <h1 class="m-title">INDIANA<span>JONES</span></h1>
+      <h2 class="m-sub">A Taça Perdida</h2>
+      <div class="m-badges">
+        <span class="badge">🏫 TURMA 2º DS</span>
+        <span class="badge">🏛 COLÉGIO BARBOSSA FERRAZ</span>
+      </div>
+    </div>
+    <div class="m-scroller">
+      <p class="lore">1969. Voller ficou com o mostrador do <b>Relógio de Arquimedes</b> e te jogou numa caverna da Amazônia. Atravesse <b>3 fases</b> — a selva, a Caverna do Tempo e a Câmara do Cálice — junte os fragmentos ⚙️ e derrote a <b>Sentinela do Tempo</b>: a <b>Taça Perdida</b> é a sua volta para 1969.</p>
+      <p class="lore"><b>📖 Tutorial na fase 1:</b> um guia de 8 passos aparece no começo (andar → travar a mira → atacar → giro do chicote → pegar o drop → 3 fragmentos → argola 🌀 → abrir a porta). Cada passo mostra um <b>marcador dourado no chão</b> com o alvo. Dá pra pular quando quiser.</p>
+      <hr class="m-rule">
+      <div class="m-controls-block">
+        <div class="m-block-title">🎮 CONTROLES</div>
+        <div class="controls-grid">
+          <div><b>WASD</b><span>mover</span></div><div><b>Mouse</b><span>câmera</span></div>
+          <div><b>Espaço</b><span>pular</span></div><div><b>Clique / F</b><span>chicote (só ataca)</span></div>
+          <div><b>V / ⭕</b><span>argolas (só V voa!)</span></div><div><b>E</b><span>interagir</span></div>
+          <div><b>Shift</b><span>correr</span></div><div><b>Q / R</b><span>girar câmera</span></div>
+          <div><b>C / ↯</b><span>esquiva (ou 2 toques na direção)</span></div><div><b>P/Esc</b><span>pausa</span></div>
+          <div><b>G</b><span>laço 🪢 (30s)</span></div><div><b>H / 🌀</b><span>giro do chicote (área)</span></div>
+          <div><b>Z / 🎯</b><span>travar a mira num inimigo</span></div><div></div>
+        </div>
+      </div>
+      <hr class="m-rule">
+      <div id="difficulty">
+        <div class="diff-title">⚙ DIFICULDADE</div>
+        <div id="diff-btns">
+          <button class="diff-btn" data-diff="facil" type="button">
+            <b>🟢 FÁCIL</b>
+            <span>Para iniciantes que querem apreciar a aventura e ver a história de Indiana Jones.</span>
+          </button>
+          <button class="diff-btn" data-diff="medio" type="button">
+            <b>🟡 MÉDIO</b>
+            <span>Jogo mediano para quem quer um pouco de dificuldade, mas com certo nível de facilidade.</span>
+          </button>
+          <button class="diff-btn" data-diff="dificil" type="button">
+            <b>🔴 DIFÍCIL</b>
+            <span>Para quem já está familiarizado com o jogo e quer um nível alto de dificuldade.</span>
+          </button>
+        </div>
+        <div id="diff-desc">Escolha 🟢 🟡 ou 🔴 — o jogo muda de verdade: quantidade de inimigos, armadilhas, vida, dano e a Sentinela.</div>
+        <div id="diff-status">⚠ Escolha uma dificuldade para começar</div>
+      </div>
+      <button id="btn-start" class="big">▶ ESCOLHA UMA DIFICULDADE</button>
+      <button id="btn-continue" class="ghost hidden">↻ CONTINUAR</button>
+      <button id="btn-help" class="ghost">❓ COMO JOGAR</button>
+      <div id="help-text" class="hidden">Nova York, 1969: Voller fugiu com o Relógio de Arquimedes e jogou você numa caverna na Amazônia, Brasil. Atravesse as 3 fases, junte fragmentos ⚙️, puxe alavancas e desvie de troncos e pedras rolantes 🪵, lanças 🗡, espinhos e lava. As argolas douradas funcionam <b>SÓ no V</b> 🌀 (clique/F é SÓ ataque, NÃO voa!) com <b>6s de recarga</b> — MIRE com a cruz pra escolher onde cair! No celular use o botão 🌀. Na Fase 3 há uma <b>ponte de lajes frágeis</b> sobre a lava: ao pisar elas tremem e <b>caem 2,2 segundos depois</b> — corra sem parar. A cobra ENVENENA ☠️ por <b>6s</b> e a lava deixa <b>QUEIMANDO 🔥 por 5s</b> (4 de dano por segundo). Bater numa armadilha <b>não te joga pro começo da fase</b>: você se levanta no último chão seguro e continua. Correr gasta fôlego; kits médicos curam e podem ter pílula vital (+20 vida máx, teto 340).
+
+    <br><br>📖 <b>ALTAR + LIVRO ANCESTRAL (quiz)</b>: juntou todos os fragmentos ⚙️? O livro no altar destranca e acende. Chegue perto e aperte <b>E</b>: o livro faz <b>perguntas de prova</b> (Matemática, Português, Ciências e História). <b>Acertando, a porta de pedra se abre</b>; errando, o livro morde (‑8 de vida) e pergunta de novo. Na Fase 2 o livro só destranca depois das <b>2 alavancas</b>. Na Fase 3 <b>não há quiz</b>: o altar do selo, no túnel, se rompe com um único <b>E</b>.<br><br>⚙ <b>DIFICULDADE (obrigatória)</b>: o jogo não começa sem você escolher uma.
+🟢 <b>FÁCIL</b> — 2 inimigos de cada tipo por fase, <b>armadilhas reduzidas</b>, 300 de vida, dano pela metade. Para iniciantes que querem apreciar a aventura e ver a história de Indiana Jones.<br>
+🟡 <b>MÉDIO</b> — 3 inimigos de cada tipo, armadilhas completas, 200 de vida. Jogo mediano para quem quer um pouco de dificuldade, mas com certo nível de facilidade.<br>
+🔴 <b>DIFÍCIL</b> — 5 inimigos de cada tipo, 150 de vida, dano +60%, inimigos rápidos, Sentinela com 1170. Para quem já está familiarizado com o jogo e quer um nível alto de dificuldade.
+
+    <br><br>🪢 <b>LAÇO (G, 30s)</b>: laça o alvo mais próximo a 14m — <b>inimigo OU item no chão</b> (o drop voa girando até a sua mão!). Num inimigo: <b>arranca ele do chão, gira no ar e esmaga no chão</b>. Inimigo comum morre na hora. Contra a <b>Sentinela do Tempo</b> o laço não quebra a pedra: ela <b>cai ATORDOADA ⚡</b> — e atordoada leva <b>dano dobrado</b>. Use aproximando no momento certo.
+
+    <br><br>🗿 <b>SENTINELA DO TEMPO (900 de vida, 5,2m)</b>: Sentinela colossal com mãos de pedra e o mostrador do Relógio no peito. A arena é <b>LIMPA</b> — nenhuma armadilha, é você contra ela. Ataques: <b>🗿 PANCADA</b>, <b>🌊 ONDA DE CHOQUE</b> e <b>🌀 GIRO</b>.
+
+    <br><br>🌀 <b>COMO DESVIAR (4 jeitos)</b>:<br>1) 🔴 <b>Veja a marca vermelha no chão</b> — ela mostra exatamente onde o golpe vai cair e pulsa mais rápido conforme chega.<br>2) <b>C / Ctrl / ↯</b> (ou <b>dois toques</b> na direção) = <b>esquiva</b>: rolamento de 360° com invulnerabilidade durante o giro.<br>3) ⏱️ <b>Esquiva perfeita</b>: se o golpe passaria em você e NÃO pegou, o tempo fica <b>lento</b> e a Sentinela desequilibra (ataque!).<br>4) ⚡ <b>Parry</b>: bata com o chicote <b>enquanto ela ergue as mãos</b> (antecipação) — o golpe é cancelado e o dano dobra.<br>Também dá pra <b>pular por cima</b> da onda e <b>empurrar a Sentinela contra a PAREDE</b> — quando ela martela a pedra fica <b>ATORDOADA 2,6s</b> com dano dobrado. Aos 40% de vida ela ENFURECE.
+
+    <br><br>🏆 <b>CÁLICE DA ÂNCORA</b>: derrotada a Sentinela, o pedestal do fundo da arena entrega um <b>cálice dourado</b> — o prêmio final. É ele que abre o túnel de fuga.
+
+    <br><br>🏃 <b>FUGA</b>: pegue o cálice e CORRA pela arena, atravesse o vão de lava pelas lajes (elas caem!) e entre no túnel. A pedrona que te persegue também não atravessa parede.</div>
+      <div class="foot">Three.js • sem instalação • progresso salvo no navegador
+        <span class="m-credit">JOGO DESENVOLVIDO POR <b>FABIO EDUARDO 2DS</b></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cutscene de cinema -->
+<div id="cutscene" class="hidden">
+  <div id="cs-bar-top"></div>
+  <div id="cs-bottom">
+    <div id="cs-kicker"></div>
+    <h2 id="cs-title"></h2>
+    <p id="cs-text"></p>
+    <div id="cs-hint">clique ou aperte <b>Espaço</b> p/ continuar • <b>Esc</b> p/ pular</div>
+  </div>
+  <div id="cs-bar"></div>
+</div>
+
+<!-- Transição de fase -->
+<div id="story" class="screen hidden">
+  <div class="panel">
+    <div id="story-kicker" class="kicker">FASE 1 — 1969</div>
+    <h1 id="story-title">Despertar na Amazônia</h1>
+    <p id="story-text" class="lore"></p>
+    <button id="btn-next" class="big">▶ ENTRAR</button>
+  </div>
+</div>
+
+<!-- 📖 QUIZ DO LIVRO ANCESTRAL: altar + livro abre a porta -->
+<div id="quiz" class="screen hidden">
+  <div class="panel quiz-panel">
+    <div class="kicker" id="quiz-kicker">📖 LIVRO ANCESTRAL</div>
+    <h1 id="quiz-title">O LIVRO PERGUNTA…</h1>
+    <div class="quiz-meta" id="quiz-meta"></div>
+    <p class="lore" id="quiz-question">Carregando pergunta…</p>
+    <div id="quiz-opts"></div>
+    <div id="quiz-feedback"></div>
+    <p class="lore quiz-dica" id="quiz-dica"></p>
+    <p class="lore quiz-foot" id="quiz-foot">Matemática • Português • Ciências • História — até o 5º ano</p>
+  </div>
+</div>
+
+<!-- Pause / GameOver / Vitória -->
+<div id="pause" class="screen hidden">
+  <div class="panel"><h1>⏸ PAUSADO</h1><p class="lore">Respire, aventureiro.</p>
+    <button id="btn-resume" class="big">▶ CONTINUAR</button>
+    <button id="btn-restart" class="ghost">↻ REINICIAR FASE</button>
+    <button id="btn-quit" class="ghost">🏠 MENU</button>
+  </div>
+</div>
+
+<div id="gameover" class="screen hidden">
+  <div class="panel"><h1>💀 VOCÊ CAIU</h1><p class="lore" id="death-text">O tempo cobra seu preço...</p>
+    <button id="btn-retry" class="big">↻ TENTAR DE NOVO</button>
+    <button id="btn-go-menu" class="ghost">🏠 MENU</button>
+  </div>
+</div>
+
+<div id="victory" class="screen hidden">
+  <div class="panel gold"><div class="kicker">🏆 LENDÁRIO!</div>
+    <h1>O CÁLICE É SEU!</h1>
+    <p class="lore" id="victory-stats"></p>
+    <button id="btn-again" class="big">↻ JOGAR DE NOVO</button>
+  </div>
+</div>
+
+<div id="loading" class="screen hidden"><div class="panel"><h1>⌛ Carregando selva...</h1></div></div>
+
+<script type="importmap">
+{ "imports": { "three": "./js/three.module.js" } }
+</script>
+<script type="module" src="js/game.js?v=perf5"></script>
+</body>
+</html>
